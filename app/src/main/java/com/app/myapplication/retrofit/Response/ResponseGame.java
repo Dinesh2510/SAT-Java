@@ -19,7 +19,7 @@ public class ResponseGame {
     private List<Inning> innings = null;
     @SerializedName("Teams")
     @Expose
-    private Teams teams;
+    private Map<String, AllTeamData> teams;
     @SerializedName("Notes")
     @Expose
     private Notes notes;
@@ -48,11 +48,11 @@ public class ResponseGame {
         this.innings = innings;
     }
 
-    public Teams getTeams() {
+    public Map<String, AllTeamData> getTeams() {
         return teams;
     }
 
-    public void setTeams(Teams teams) {
+    public void setTeams(Map<String, AllTeamData> teams) {
         this.teams = teams;
     }
 
@@ -122,33 +122,8 @@ public class ResponseGame {
         }
 
     }
-    public class Teams { //this team
 
-        @SerializedName("4")
-        @Expose
-        private TeamOne teamOne;
-        @SerializedName("5")
-        @Expose
-        private TeamTwo teamTwo;
-
-        public TeamOne getTeamOne() {
-            return teamOne;
-        }
-
-        public void setTeamOne(TeamOne teamOne) {
-            this.teamOne = teamOne;
-        }
-
-        public TeamTwo getTeamTwo() {
-            return teamTwo;
-        }
-
-        public void setTeamTwo(TeamTwo teamTwo) {
-            this.teamTwo = teamTwo;
-        }
-    }
-
-    public class TeamOne {
+    public class AllTeamData {
 
         @SerializedName("Name_Full")
         @Expose
@@ -187,42 +162,6 @@ public class ResponseGame {
     }
 
 
-    public class TeamTwo {
-
-        @SerializedName("Name_Full")
-        @Expose
-        private String nameFull;
-        @SerializedName("Name_Short")
-        @Expose
-        private String nameShort;
-        @SerializedName("Players")
-        @Expose
-        private Map<String, PlayerDataModelled> players;
-
-        public String getNameFull() {
-            return nameFull;
-        }
-
-        public void setNameFull(String nameFull) {
-            this.nameFull = nameFull;
-        }
-
-        public String getNameShort() {
-            return nameShort;
-        }
-
-        public void setNameShort(String nameShort) {
-            this.nameShort = nameShort;
-        }
-
-        public Map<String, PlayerDataModelled> getPlayers() {
-            return players;
-        }
-
-        public void setPlayers(String key , PlayerDataModelled playerDataModelled) {
-            this.players.put(key , playerDataModelled);
-        }
-    }
 
 
     public class ThisOver {

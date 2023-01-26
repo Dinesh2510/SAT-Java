@@ -2,13 +2,14 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_lyt"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_10"
-    android:id="@+id/main_lyt"
+    android:fillViewport="true"
     tools:context=".activities.MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -18,8 +19,10 @@
             layout="@layout/tool_common" />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/lyt_tool"
             android:layout_margin="@dimen/_8sdp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="5dp"
@@ -60,8 +63,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Teams : "
-                        android:textSize="16sp"
                         android:textColor="@color/black"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
 
@@ -76,6 +79,7 @@
 
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -88,8 +92,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Venue : "
-                        android:textSize="16sp"
                         android:textColor="@color/black"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
 
@@ -100,8 +104,8 @@
                         android:layout_alignParentRight="true"
                         android:gravity="center"
                         android:text="- "
-                        android:textSize="16sp"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
 
 
                 </LinearLayout>
@@ -143,8 +147,8 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_centerVertical="true"
-                            android:rotation="180"
                             android:layout_toRightOf="@id/txt_more"
+                            android:rotation="180"
                             android:src="@drawable/ic_baseline_arrow_back_24" />
 
                     </RelativeLayout>
@@ -156,5 +160,14 @@
 
 
         </androidx.cardview.widget.CardView>
-    </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="No data found" />
+    </RelativeLayout>
 </androidx.core.widget.NestedScrollView>

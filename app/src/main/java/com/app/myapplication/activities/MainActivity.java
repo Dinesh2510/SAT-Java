@@ -16,6 +16,8 @@ import com.app.myapplication.databinding.ActivityMainBinding;
 import com.app.myapplication.retrofit.Response.ResponseGame;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements IMain.View {
     ActivityMainBinding binding;
     private MainPresenter mainPresenter;
@@ -39,19 +41,29 @@ public class MainActivity extends AppCompatActivity implements IMain.View {
         binding.lytTool.imgbck.setVisibility(View.GONE);
         binding.lytTool.toolbrLbl.setText(" Home");
         if (CommonFunctions.isNetworkConnected(MainActivity.this)) {
+            binding.cardView.setVisibility(View.VISIBLE);
+            binding.noData.setVisibility(View.GONE);
             mainPresenter.getGameData();
         } else {
-            CommonFunctions.showNoInternetDialog(MainActivity.this);
+           noDataFound_Internet();
         }
 
     }
 
+    private void noDataFound_Internet() {
+        CommonFunctions.showNoInternetDialog(MainActivity.this);
+        binding.cardView.setVisibility(View.GONE);
+        binding.noData.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void onGetResult(ResponseGame responseGame) {
+        ArrayList<ResponseGame.AllTeamData> allTeamData = new ArrayList<ResponseGame.AllTeamData>(responseGame.getTeams().values());
 
         binding.dateTime.setText(responseGame.getMatchdetail().getMatch().getDate() + " at " + responseGame.getMatchdetail().getMatch().getTime());
         binding.location.setText(responseGame.getMatchdetail().getVenue().getName());
-        binding.teamName.setText(responseGame.getTeams().getTeamOne().getNameFull() + " vs " + responseGame.getTeams().getTeamTwo().getNameFull());
+        binding.teamName.setText(allTeamData.get(0).getNameFull()+ " vs " + allTeamData.get(1).getNameFull());
+
         binding.seeMore.setOnClickListener(view -> {
             Gson gson = new Gson();
             Intent intent = new Intent(MainActivity.this, Details_Page.class);

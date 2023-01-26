@@ -45,22 +45,26 @@ public class Details_Page extends AppCompatActivity {
     public void init() {
         Gson gson = new Gson();
         object = gson.fromJson(getIntent().getStringExtra("myjson"), ResponseGame.class);
-
         binding.lytTool.imgbck.setOnClickListener(view -> finish());
-        binding.lytTool.toolbrLbl.setText(object.getTeams().getTeamOne().getNameShort() + " vs " + object.getTeams().getTeamTwo().getNameShort());
-        str_team_one = object.getTeams().getTeamOne().getNameShort();
-        str_team_two = object.getTeams().getTeamTwo().getNameShort();
+
+        //set Data to arraylist for Both Team Data dynamic keys
+        ArrayList<ResponseGame.AllTeamData> allTeamsData = new ArrayList<ResponseGame.AllTeamData>(object.getTeams().values());
+
+        binding.lytTool.toolbrLbl.setText(allTeamsData.get(0).getNameShort() + " vs " + allTeamsData.get(1).getNameShort());
+        str_team_one = allTeamsData.get(0).getNameShort();
+        str_team_two = allTeamsData.get(1).getNameShort();
+
         //FilterView
-        AddFilterOnView(object.getTeams().getTeamOne().getNameShort(), object.getTeams().getTeamTwo().getNameShort());
+        AddFilterOnView(allTeamsData.get(0).getNameShort(), allTeamsData.get(1).getNameShort());
 
         //set Data to arraylist for team one
-        ArrayList<PlayerDataModelled> playerList_teams_one = new ArrayList<PlayerDataModelled>(object.getTeams().getTeamOne().getPlayers().values());
+        ArrayList<PlayerDataModelled> playerList_teams_one = new ArrayList<PlayerDataModelled>(allTeamsData.get(0).getPlayers().values());
 
         //set Data to arraylist for team Two
-        ArrayList<PlayerDataModelled> playerList_teams_two = new ArrayList<PlayerDataModelled>(object.getTeams().getTeamTwo().getPlayers().values());
+        ArrayList<PlayerDataModelled> playerList_teams_two = new ArrayList<PlayerDataModelled>(allTeamsData.get(1).getPlayers().values());
 
         //Teams One Data Set
-        binding.teamName.setText(object.getTeams().getTeamOne().getNameFull());
+        binding.teamName.setText(allTeamsData.get(0).getNameFull());
         binding.rvTeamOne.setLayoutManager((new LinearLayoutManager(Details_Page.this, LinearLayoutManager.VERTICAL, false)));
         binding.rvTeamOne.setAdapter(new PlayerAdapter(playerList_teams_one, Details_Page.this, new AdapterClickListener() {
             @Override
@@ -71,7 +75,7 @@ public class Details_Page extends AppCompatActivity {
         }));
 
         //Teams Two Data Set
-        binding.teamNameTwo.setText(object.getTeams().getTeamTwo().getNameFull());
+        binding.teamNameTwo.setText(allTeamsData.get(1).getNameFull());
         binding.rvTeamTwo.setLayoutManager((new LinearLayoutManager(Details_Page.this, LinearLayoutManager.VERTICAL, false)));
         binding.rvTeamTwo.setAdapter(new PlayerAdapter(playerList_teams_two, Details_Page.this, new AdapterClickListener() {
             @Override
@@ -153,7 +157,7 @@ public class Details_Page extends AppCompatActivity {
                     } else if (selected_filter_name.equals(str_team_one)) {
                         binding.cardTeamOne.setVisibility(View.VISIBLE);
                         binding.cardTeamTwo.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         binding.cardTeamOne.setVisibility(View.GONE);
                         binding.cardTeamTwo.setVisibility(View.VISIBLE);
                     }
